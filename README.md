@@ -11,7 +11,6 @@ The main goal of this project is to demonstrate backend development skills inclu
 * Database design
 * Secure authentication
 * Transaction safety
-* Concurrency handling
 
 ---
 
@@ -124,7 +123,7 @@ Request
 
 ```
 {
-"name": "david",
+"name": "David",
 "email": "david@gmail.com",
 "password": "123456"
 }
@@ -200,6 +199,14 @@ Install dependencies
 composer install
 ```
 
+Copy environment file
+
+```
+cp .env.example .env
+```
+
+Generate application key
+
 ```
 php artisan key:generate
 ```
@@ -241,8 +248,6 @@ The system uses **Laravel Sanctum** for API authentication.
 All protected endpoints require a valid Bearer Token.
 
 Passwords are securely hashed using Laravel's hashing system.
-
----
 
 ---
 
