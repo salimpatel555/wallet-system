@@ -18,14 +18,20 @@ class TransferController extends Controller
         ]);
         $sender = Auth::user();
         if($sender->id == $request->receiver_id){
-            return response()->json(['message'=>'Cannot transfer to yourself'],400);
+            return response()->json([
+                'status' => "error",
+                'message'=>'Cannot transfer to yourself'
+                ],400);
         }
         DB::beginTransaction();
         try{
             $senderWallet = Wallet::where('user_id',$sender->id)->lockForUpdate()->first();
             $receiverWallet = Wallet::where('user_id',$request->receiver_id)->lockForUpdate()->first();
             if($senderWallet->balance < $request->amount){
-                return response()->json(['message'=>'Insufficient balance'],400);
+                return response()->json([
+                    'status' => "error",
+                    'message'=>'Insufficient balance'
+                    ],400);
             }
             $senderWallet->balance -= $request->amount;
             $receiverWallet->balance += $request->amount;
@@ -38,6 +44,7 @@ class TransferController extends Controller
             ]);
             DB::commit();
             return response()->json([
+                'status'=> 'success',
                 'message'=>'Amount Transfer successful'
             ]);
 

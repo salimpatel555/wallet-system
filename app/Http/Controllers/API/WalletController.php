@@ -11,6 +11,7 @@ class WalletController extends Controller
     public function wallet(){
         $wallet = Auth::user()->wallet;
         return response()->json([
+            'status' => "success",
             'balance'=>$wallet->balance
         ]);
 

@@ -29,6 +29,7 @@ class AuthController extends Controller
 
         $token = $user->createToken('auth_token')->plainTextToken;
         return response()->json([
+            'status' => "success",
             'token' => $token
         ]);
     }
@@ -41,13 +42,13 @@ class AuthController extends Controller
         $user = User::where('email',$request->email)->first();
         if(!$user || !Hash::check($request->password,$user->password)){
             return response()->json([
-                'status' => false,
+                'status' => 'error',
                 'message' => 'Invalid Credentials'
             ],404);
         }
         $token = $user->createToken('auth_token')->plainTextToken;
         return response()->json([
-            'status' => true,
+            'status' => 'success',
             'token' => $token,
             'user' => $user
         ],200);
